@@ -26,10 +26,7 @@ var webpackConfig = {
       ],
     },
     ]
-  },
-  // devServer: {
-  //   writeToDisk: true
-  // },
+  }
 };
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: './src/index.html',
