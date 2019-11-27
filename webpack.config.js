@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path')
+const WebpackNotifierPlugin = require('webpack-notifier');
+const path = require('path');
+
 var webpackConfig = {
   entry: {
     main: './src/main.ts'
@@ -11,7 +13,18 @@ var webpackConfig = {
     path: path.join(__dirname, 'src', 'dist'),
   },
   module: {
-    rules: [{
+    rules: [
+    {
+      test   : /\.scss$/,
+      loader : 'postcss-loader',
+      options: {
+        ident  : 'postcss',
+        plugins: () => [
+          require('postcss-short')(),
+        ]
+      }
+    },
+    {
       test: /\.ts$/,
       use: ['ts-loader', 'angular2-template-loader']
     },
@@ -25,6 +38,13 @@ var webpackConfig = {
         'to-string-loader', 'css-loader',
       ],
     },
+    ],
+    plugins: [
+      new WebpackNotifierPlugin({
+        alwaysNotify: true,
+        title       : 'App Name',
+        contentImage: path.join(__dirname, 'image.png')
+      }),
     ]
   }
 };
